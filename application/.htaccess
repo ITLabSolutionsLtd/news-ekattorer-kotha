@@ -1,0 +1,3 @@
+# RewriteEngine On
+# RewriteCond $1 !^(index\.php|error.\html|.well-known|vendors|lightpicker|file|images|captcha|system|tools|script|css|themes|fonts|assets|js|style|robots\.txt|sitemap\.xml|timer\.html|ads\.txt|thumb|app-assets|news_gallery|assets|upload|addsense)
+# RewriteRule ^(.*)$ index.php?/$1 [L]

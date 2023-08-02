@@ -1,0 +1,33 @@
+# <IfModule mod_headers.c>
+#    Header set Access-Control-Allow-Origin https://www.shyamalsylhet.com  
+#    Header set Access-Control-Allow-Credentials true
+# </IfModule>
+
+# <FilesMatch ".(eot|svg|otf|ttf|woff)">
+#    Header set Access-Control-Allow-Origin "*"
+# </FilesMatch>
+
+# BEGIN GZIP
+# <ifmodule mod_deflate.c>
+# AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript
+# </ifmodule>
+# END GZIP
+
+# RewriteEngine On
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+# # RewriteCond $1 !^(index\.php|error.\html|assets|captcha|file|images|system|tools|script|css|panel|logo|themes|fonts|assets|js|style|robots\.txt|sitemap\.xml|timer\.html|ads\.txt|thumb|app-assets|news_gallery|upload|addsense)
+# RewriteCond $1 !^(index\.php|error.\html|assets|captcha|file|images|system)
+# RewriteRule ^(.*)$ index.php?/$1 [L]
+
+
+
+
+RewriteEngine On
+RewriteCond $1 !^(index\.php|error.\html|.well-known|vendors|lightpicker|file|images|captcha|system|tools|script|css|themes|fonts|assets|js|style|robots\.txt|sitemap\.xml|timer\.html|ads\.txt|thumb|app-assets|news_gallery|assets|upload|addsense)
+RewriteRule ^(.*)$ index.php?/$1 [L]
+
+
+
+
+
