@@ -325,10 +325,10 @@
 
         public function archive()
         {
-            $data['isMobile']               = $this->isMobile();
-            $data['news_advertise']         = $this->query_model->news_advertise_info();
-            $data['latest_news']            = $this-> query_model-> latest_news_info(5);
-            $data['newspaper']              = $this->query_model->page_info();
+            $data['isMobile']               = $this-> isMobile();
+            $data['news_advertise']         = $this-> query_model -> news_advertise_info();
+            $data['latest_news']            = $this-> query_model -> latest_news_info(5);
+            $data['newspaper']              = $this-> query_model -> page_info();
 
             $news_keyword	= $this-> input-> get('search');
             $date = $this->input->get('date');

@@ -199,11 +199,10 @@
             </div>
 
             <div class="col-xl-3  col-lg-12 order-4 order-xl-4  order-lg-4 order-3">
-                <div class="div-title">
-                    <h3 class="title-one">আলোচিত</h3>
-
-                </div>
                 <div class="list-box-two mt-1">
+                    <div class="div-title">
+                        <h3 class="title-one">আলোচিত</h3>
+                    </div>
                     <?php
                         if($popular_ten_news){
                             foreach($popular_ten_news as $row){?> 

@@ -2118,7 +2118,7 @@ class Query_model extends CI_Model{
 		
 		function date_key_wise_news_list($date,$news_keyword)
 		{
-			$query=$this-> db-> query("SELECT `news_common_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_brief_info`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`
+			$query=$this-> db-> query("SELECT `news_common_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_brief_info`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`, `news_common_info`.`news_mod_date`, `news_common_info`.`news_mod_time`
 										FROM `news_info`,`category_info`,`news_common_info`
 										WHERE `news_common_info`.`news_status` !=0 AND `news_common_info`.`news_status` !=4 
 										AND `category_info`.`cat_id`=`news_common_info`.`cat_id` 
