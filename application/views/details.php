@@ -104,13 +104,13 @@
                                             <div class="main-image">
                                                 <?php
                                                     if($row->video_link){ ?>
-                                                        <div class="youtube" <?php if($row->img_ext){ ?> data-image="<?php echo base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext); ?>" <?php } ?> data-embed="<?php echo $row->video_link; ?>">
+                                                        <div class="youtube" <?php if($row->img_ext){ ?> data-image="<?php echo base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)); ?>" <?php } ?> data-embed="<?php echo $row->video_link; ?>">
                                                             <div class="play-button"></div>
                                                         </div>
                                                         <span class="img-caption"><?php echo $row->video_caption; ?></span>
                                                     <?php }
                                                     else {?> 
-                                                        <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                        <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                                         <span class="img-caption"><?php echo $row->img_caption; ?></span>
                                                     <?php 
                                                     }
@@ -127,43 +127,36 @@
 
 
                                             <div class="news-share">
-                                                <div id="share-buttons">
-                                                    <span>শেয়ার - </span>
-                                                    
-                                                   
-                                                    
-                                                    <!-- Facebook -->
-                                                    <a href="https://www.facebook.com/share.php?u=<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline))?>" target="_blank" title="Facebook">
-                                                        <span><i class="fab fa-facebook-f"></i> </span>
-                                                    </a>
-                                                    <!-- Twitter -->
-                                                    <a href="https://twitter.com/share?text=Ekattorer Kotha&url=<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline))?>/&hashtags=#EkattorerKotha" target="_blank" title="Twitter">
-                                                        <span><i class="fab fa-twitter"></i></span>
-                                                    </a>
-                                                    <!-- Email -->
-                                                    <a href="mailto:?Subject=<?php echo stripslashes($row->news_headline); ?>&amp;Body=<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" title="Mail">
-                                                        <span><i class="fas fa-paper-plane"></i></span>
-                                                    </a>
-
-                                                    <!-- LinkedIn -->
-                                                    <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" target="_blank" title="Linkedin">
-                                                        <span><i class="fab fa-linkedin-in"></i></span>
-                                                    </a>
-                                                    <!-- whatsapp -->
-                                                    <a href="https://api.whatsapp.com/send?phone=&text=<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" target="_blank" title="Whatsapp">
-                                                        <span><i class="fab fa-whatsapp"></i></span>
-                                                    </a>
-                                                    <!-- Print -->
-                                                    <a href="javascript:;" onclick="window.print()" title="Print">
-                                                        <span><i class="fas fa-print"></i></span>
-                                                    </a>
-                                                </div>
+                                                <!-- ShareThis BEGIN -->
+                                                <div class="sharethis-inline-share-buttons"></div>
+                                                <!-- ShareThis END -->
+                                                
                                             </div>
                                         </div>
                                     </div>
                                     
                                     <div class="col-xl-3 col-lg-3 col-md-3 col-12 sticky-part">
-                                        <div class="body-add-box-one advertise  py-3">
+                                    
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5248664437668325"
+                                                     crossorigin="anonymous"></script>
+                                                <!-- e-kotha-responsive -->
+                                                <ins class="adsbygoogle"
+                                                     style="display:block"
+                                                     data-ad-client="ca-pub-5248664437668325"
+                                                     data-ad-slot="4326156888"
+                                                     data-ad-format="auto"
+                                                     data-full-width-responsive="true"></ins>
+                                                <script>
+                                                     (adsbygoogle = window.adsbygoogle || []).push({});
+                                                </script>
+                                            </div>
+                                        </div>
+                                     
+
+                                        
+                                        <div class="body-add-box-one advertise d-none py-3">
                                             <?php
                                                 if($news_advertise){
                                                     foreach($news_advertise as $ads){
@@ -258,7 +251,7 @@
                                                     foreach($latest_news as $key => $item){ ?>
                                                         <div class="list-box <?php if($key == 4) echo 'border-0'?>" >
                                                             <div class="image-part">
-                                                                <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
+                                                                <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small. $item->news_id.$item->img_ext.'?newst='.strtotime($item->news_mod_date.$item->news_mod_time)) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
                                                             </div>
                                                             <div class="content-list">
                                                                 <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>">
@@ -281,6 +274,26 @@
                         }
                     }
                 ?>
+                
+ 
+                <div class="row">
+                    <div class="col-md-12">
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5248664437668325"
+                             crossorigin="anonymous"></script>
+                        <!-- e-kotha-responsive -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-5248664437668325"
+                             data-ad-slot="4326156888"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+
+
 
                 <div class="row">
                     <div class="body-add-box-one advertise  py-3">
@@ -318,17 +331,16 @@
                                     foreach($category_wise_news as $row){
                                         $folder = ceil($row->news_id/1000); ?>
                                         <div class="col-xl-2 col-lg-3 col-md-3 col-6">
-                                            <div class="child-div-two">
-                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                    <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                                </a>
-                                                <div class="content-box">
-                                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                        <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                                    </a>
+                                            <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                                <div class="child-div-two">
+                                                    <div>
+                                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                    </div>
+                                                    <div class="content-box">
+                                                        <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                                    </div>
                                                 </div>
-                                                
-                                            </div>
+                                            </a>
                                         </div>
                                     <?php 
                                     }

@@ -64,7 +64,7 @@
                                     <div class="col-lg-3 col-md-3 col-6 mb-4 mb-lg-0 d-flex" >
                                         <div class="card rounded shadow-sm border-0">
                                             <div class="card-body <?php if(!$isMobile) echo 'p-4'; else echo 'p-1'; ?>">
-                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/thumb'.'/' . $row->news_id . $row->img_ext) : $default_image ?>" class="img-fluid d-block mx-auto mb-3" width="100%" >
+                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/thumb'.'/' . $row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image ?>" class="img-fluid d-block mx-auto mb-3" width="100%" >
                                                
                                                 <h5><a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="text-dark"><?php echo stripslashes($row->news_headline); ?></a></h5>
                                             </div>

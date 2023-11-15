@@ -1,5 +1,24 @@
-<div class="contaienr-fluid py-2"></div>
+<!--Google Responsive Ad-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center my-3">
+            <!-- e-kotha-responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5248664437668325"
+                 data-ad-slot="4326156888"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+</div>
+<!--Google Responsive Ad-->
 
+
+<div class="contaienr-fluid py-2"></div>
 
 <!-------- ************** ----------->
 <!-------- FOOTER SECTION ----------->
@@ -53,7 +72,7 @@
                             <div class="important-links list-group mb-2">
                                 <span> <strong>ই-মেইল</strong> <small>(বার্তা) :</small>  <a href="mailto:barta.ekattor@gmail.com" >  barta.ekattor@gmail.com</a></span>
                                 <span> <strong>ই-মেইল</strong> <small>(বিজ্ঞাপন) :</small> <a href="mailto:ekattor.ad@gmail.com" >  ekattor.ad@gmail.com</a></span>
-                                <span> <strong>ফোন</strong> : <a href="tel: 0821719202"> ০৮২১-৭১৯২০২ </a></span>
+                                <span> <strong>ফোন</strong> : <a href="tel:+8802996635202 "> +৮৮ ০২৯৯৬ ৬৩৫ ২০২ </a></span>
                             </div>
                             <div class="footer-social">
                                 <div class="d-flex">

@@ -17,21 +17,25 @@
 	}
 </style>
 
-<div class="body-add-box-one advertise  py-3">
-    <div class="container leaderboard">
-        <a href="#" class="d-flex justify-content-center align-items-center">
-            <?php
-                if($news_advertise){
-                    foreach($news_advertise as $row){
-                        if($row->position == 1){
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        }
-                    }
-                }
-            ?>
-        </a>
-    </div>
-</div>
+<?php
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 1){ ?>
+                <div class="body-add-box-one advertise  py-3">
+                    <div class="container leaderboard">
+                        <a href="#" class="d-flex justify-content-center align-items-center">
+                            
+                            <?php echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">'; ?>
+                                        
+                        </a>
+                    </div>
+                </div>
+            <?php 
+                
+            }
+        }
+    }
+?>
 
 <section class="master-multi archive py-2">
     <div class="container">
@@ -45,10 +49,10 @@
 						<form action="<?php echo base_url('archive')?>" method="get" class="search_arc_form">
 							<div class="row ">
 								<div class="col-md-6">
-									<input type="text" name="search" class="form-control" value="<?php if(isset($search_item)) echo $search_item ?>" placeholder="এখানে লিখুন..." autocomplete="off">
+									<input type="text" name="search" class="form-control mb-2 mb-md-0" value="<?php if(isset($search_item)) echo $search_item ?>" placeholder="এখানে লিখুন..." autocomplete="off">
 								</div>
 								<div class="col-md-4">
-									<input type="text" name="date" id="date_of_birth" value="<?php if(!empty($date)) echo bn_convert(date('d/m/y',strtotime($date))); ?>" class="form-control" placeholder="তারিখ সিলেক্ট করুন.."  onkeydown="return false"/ autocomplete="off">
+									<input type="text" name="date" id="date_of_birth" value="<?php if(!empty($date)) echo bn_convert(date('d/m/Y',strtotime($date))); ?>" class="form-control mb-2 mb-md-0" placeholder="তারিখ সিলেক্ট করুন.."  onkeydown="return false"/ autocomplete="off">
 								</div>
 								
 								<div class="col-md-2">
@@ -72,7 +76,7 @@
                                         <div class="col-xl-6 col-lg-6 col-md-6 col-6 col-12">
                                             <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                 <div class="">
-                                                    <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                    <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                                 </div>
                                             </a>
                                         </div>
@@ -99,7 +103,7 @@
                                  <div class="child-div-two">
                                     <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                         <div class="">
-                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                         </div>
                                     </a>
                                     <div class="content-box">
@@ -137,7 +141,7 @@
 								?>
                                 <div class="list-box <?php if($key == 4) echo 'border-0'?>" >
                                     <div class="image-part">
-                                        <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
+                                        <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext.'?newst='.strtotime($item->news_mod_date.$item->news_mod_time)) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
                                     </div>
                                     <div class="content-list">
                                         <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>">

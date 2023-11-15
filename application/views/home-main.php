@@ -49,25 +49,26 @@
     <?php }
 ?>
 
-
-<div class="body-add-box-one advertise  py-3">
-    <div class="container leaderboard">
-
-        <?php
-            if($news_advertise){
-                foreach($news_advertise as $row){
-                    if($row->position == 1){
-                        if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
-                        else { $link = ""; $target = "";}
-                        echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        echo '</a>';
-                    }
-                }
+<?php 
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 1){ ?>
+                <div class="body-add-box-one advertise  py-3">
+                    <div class="container leaderboard">
+                        <?php
+                            if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
+                            else { $link = ""; $target = "";}
+                            echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
+                                echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
+                            echo '</a>';
+                        ?>
+                    </div>
+                </div>
+            <?php
             }
-        ?>
-    </div>
-</div>
+        }
+    }
+?>
 
 
 
@@ -76,7 +77,7 @@
         <div class="row">
             <div class="col-xl-3 col-lg-6 order-xl-1 order-lg-2 order-2 mt-lg-0 mt-2">
                 <div class="div-title">
-                    <h3 class="title-one pt-0 pb-2"> তাজা খবর </h3>
+                    <h3 class="title-one pt-0 pb-2 mt-3 mt-mb-0"> তাজা খবর </h3>
                 </div>
                 <div class="list-div position-relative" style="overflow: hidden; max-height: 430px; overflow-y: visible;">
                     <?php 
@@ -88,12 +89,12 @@
                                 <div class="item">
                                     <div class="group-list-item">  
                     
-                                        <div class="list-box">
+                                        <div class="list-box <?php if($count == 10) echo 'border-0'; ?>">
                                             <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                 <p><?php echo stripslashes($row->news_headline); ?></p>
                                             </a>
                                             <a href="<?php echo base_url($row->cat_key_name); ?>"><span class="list-tag"><?php echo $row->cat_name; ?></span></a>
-                                            <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
+                                            <!-- <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small> -->
                                         </div>
                                     </div>
                                 </div>
@@ -104,59 +105,64 @@
                 </div>
             </div>
             
-            <style>
-                
-            </style>
-
-            <?php
-                if($lead_news){
-                    $count = 0;
-                    foreach($lead_news as $row){
-                        $count++;
-                        $folder = ceil($row->news_id/1000);
-                        if($count == 1){ ?>
-                            <div class="col-xl-4 col-lg-6 border-xl-1 order-lg-1 order-1 ">
+            <div class="col-xl-4 col-lg-6 border-xl-1 order-lg-1 order-1 ">
+                <?php
+                    if($lead_news){
+                        $count = 0;
+                        foreach($lead_news as $row){
+                            $count++;
+                            $folder = ceil($row->news_id/1000);
+                            if($count == 1){ ?>
                                 <div class="center-div">
-                                    <div class="post-box">
+                                    <div class="ratio " style="--bs-aspect-ratio: calc(9 / 9 * 100%);">
                                         <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="">
-                                            <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>">
-                                            <div class="post-content">
-                                                <h1 class="ratio-headding"><?php echo stripslashes($row->news_headline);?></h1>
-                                                <?php  if($row->news_details_brief) echo '<p>'.word_limiter($row->news_details_brief, 15).'</p>'; ?>
-                                                <div class="news-time">
-                                                    <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>">
-                                                </div>
-                                            </div>
+                                            <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>">
                                         </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-2 col-lg-12 order-3 order-xl-3 mt-xl-0 mt-2 order-lg-3 order-4">
-                                <div class="row custom-row">
-                        <?php }
-                        else{?>
-                                    <div class="col-xl-12  col-6">
-                                        <div class="child-div mid-lead">
-                                            <div class="ratio">
-                                                <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>">
-                                            </div>
-                                            <div class="child-div-content">
-                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="child-box-tag"><?php echo stripslashes($row->news_headline);?></a>
-                                                <br>
-                                                <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
+                                        <div class="overlay-content">
+                                            <div class="ratio-content">
+                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
+                                                    <h1 class="ratio-headding"><?php echo stripslashes($row->news_headline);?></h1>
+                                                </a>
+                                                <?php  if($row->news_details_brief) echo '<p class="mb-0">'.word_limiter($row->news_details_brief, 15).'</p>'; ?>
                                             </div>
                                         </div>
                                     </div>
-                        <?php } ?>
-                                
-                        <?php
+                                </div>
+                            <?php 
+                            }
+                        }
                     }
-                }
-            ?>
+                ?>
+            </div>
 
-
+            <div class="col-xl-2 col-lg-12 order-3 order-xl-3 mt-xl-0 mt-2 order-lg-3 order-4">
+                <div class="row custom-row">
+                    <?php
+                        if($selective_news){
+                            $count = 0;
+                            foreach($selective_news as $row){
+                                $folder = ceil($row->news_id / 1000);
+                                $count++; ?>
+                                <div class="col-xl-12  col-6">
+                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="child-box-tag news-link">
+                                        <div class="child-div mid-lead">
+                                            <div class="ratio news-image">
+                                                <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>">
+                                            </div>
+                                            <div class="child-div-content <?php if($count == 2) echo 'border-0'; ?>">
+                                                <h3 class="mb-0"><?php echo stripslashes($row->news_headline);?></h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            <?php 
+                            }
+                        }
+                    ?>
                 </div>
             </div>
+
+            
             <div class="col-xl-3  col-lg-12 order-4 order-xl-4  order-lg-4 order-3">
                 <div class="div-title top-alo">
                     <h3 class="title-one">আলোচিত</h3>
@@ -164,13 +170,13 @@
                 <div class="list-box-two">
                     <?php
                         if($popular_ten_news){
-                            foreach($popular_ten_news as $row){?> 
-                                <div class="list-box ">
+                            $count = 0;
+                            foreach($popular_ten_news as $row){ $count++; ?> 
+                                <div class="list-box <?php if($count == 10) echo 'border-0'; ?>">
                                     <!-- <a href="#"><span class="list-tag">মেক-আপভি</span></a> -->
                                     <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                         <p><?php echo stripslashes($row->news_headline); ?></p>
                                     </a>
-                                    <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
                                 </div>
                             
                             <?php }
@@ -181,29 +187,55 @@
 
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
     </div>
 </section>
 
+<?php
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 2){ ?>
+                <div class="body-add-box-one advertise  py-3">
+                    <div class="container leaderboard">
+                        <?php 
+                            if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
+                            else { $link = ""; $target = "";}
+                            echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
+                                echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
+                            echo '</a>';
+                        ?>
 
-
-<div class="body-add-box-one advertise  py-3">
-    <div class="container leaderboard">
-
-        <?php
-            if($news_advertise){
-                foreach($news_advertise as $row){
-                    if($row->position == 2){
-                        if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
-                        else { $link = ""; $target = "";}
-                        echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        echo '</a>';
-                    }
-                }
+                    </div>
+                </div>
+                    
+            <?php 
             }
-        ?>
+        }
+    }
+?>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center my-3">
+            <!-- e-kotha-responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5248664437668325"
+                 data-ad-slot="4326156888"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 </div>
+
 
 
 
@@ -234,7 +266,7 @@
                                             <div class="floting-item-inner">
                                                 <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                     <div class="image-box">
-                                                        <img class="owl-lazy" style=" aspect-ratio: 16/10; object-fit: cover;" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                        <img class="owl-lazy" style=" aspect-ratio: 16/10; object-fit: cover;" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                                     </div>
                                                     <div class="content-box">
                                                         <p class="text-start"> <?php if($count == 1 && $row->headline_tag) echo '<span>'.$row->headline_tag.'</span>'; ?> <?php echo stripslashes($row->news_headline); ?></p>
@@ -485,7 +517,9 @@
 
 
 
-<section id="section-four" class="section-four mt-5">
+
+
+<section id="section-four" class="section-four mt-3">
     <div class="container">
         <div class="section-title-style mb-3" style="border-bottom: 3px solid #ec3535;">
             <h1 class="overlay-title">সিলেটের কথা</h1>
@@ -502,34 +536,34 @@
                         $count++;
                         if($count < 3){ ?>
                             <div class="col-xl-6 col-lg-6 col-md-6">
-                                <div class="row">
-                                    <div class="col-xl-6  <?php if($count == 2) echo "col-4 mt-2"?>">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="ratio-div">
-                                            <div>
-                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                    <div class="row">
+                                        <div class="col-xl-6  <?php if($count == 2) echo "col-4 mt-2"?>">
+                                            <div class="ratio-div">
+                                                <div class="news-image">
+                                                    <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                </div>
                                             </div>
-                                        </a>
-                                    </div>
-                                    <div class="col-xl-6 d-flex justify-content-center align-items-center <?php if($count == 2) echo "col-8"?> ">
-                                        <div class="content-box-div ">
-                                            <div class="content-box mb-2">
-                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
+                                        </div>
+                                        <div class="col-xl-6 d-flex justify-content-center align-items-center <?php if($count == 2) echo "col-8"?> ">
+                                            <div class="content-box-div ">
+                                                <div class="content-box mb-2">
                                                     <h1 class="lead-headding"> <?php echo stripslashes($row->news_headline); ?></h1>
-                                                    <span class=" d-md-block <?php if($count == 2) echo "d-none"?>">
+                                                    <p class=" d-md-block <?php if($count == 2) echo "d-none"?>">
                                                         <?php if($row->news_details_brief) echo word_limiter($row->news_details_brief, 15); ?>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                            <div class="author-box">
-                                                <div class="d-flex justify-content-start align-items-center">
-                                                    <div class="detail-box d-flex justify-content-start align-items-center">
-                                                        <div class="time"><span class="mark"><?php if($row->sub_cat_name) echo $row->sub_cat_name; else echo "সিলেট"; ?></span> |  <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></div>
+                                                    </p>
+                                                </div>
+                                                <div class="author-box">
+                                                    <div class="d-flex justify-content-start align-items-center">
+                                                        <div class="detail-box d-flex justify-content-start align-items-center">
+                                                            <div class="time"><span class="mark"><?php if($row->sub_cat_name) echo $row->sub_cat_name; else echo "সিলেট"; ?></span> </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>  
                         <?php }
                         
@@ -540,48 +574,51 @@
                                     echo '<div class="classified-row py-2"></div>'; 
                                 }
                                 ?>
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
-                                <div class="child-div-two">
-                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                         <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">  
-                                    </a>
-                                    <div class="content-box">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                            <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                        </a>
+                            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-6">
+                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                    <div class="child-div-two">
+                                        <div class="news-image">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">  
+                                        </div>
+                                        <div class="content-box">
+                                            <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                        </div>
                                     </div>
-                                    
-                                </div>
+                                </a>
                             </div>
                         <?php }
                     }
                 }
             ?>
-
-            
         </div>
     </div>
 </section>
 
 
-<div class="body-add-box-one advertise  py-3">
-    <div class="container leaderboard">
 
-        <?php
-            if($news_advertise){
-                foreach($news_advertise as $row){
-                    if($row->position == 3){
-                        if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
-                        else { $link = ""; $target = "";}
-                        echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        echo '</a>';
-                    }
-                }
+
+<?php
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 3){ ?>
+                <div class="body-add-box-one advertise  py-2">
+                    <div class="container leaderboard">
+                        <?php 
+                            if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
+                            else { $link = ""; $target = "";}
+                            echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
+                                echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
+                            echo '</a>';
+                        ?>
+                    </div>
+                </div>
+            <?php 
             }
-        ?>
-    </div>
-</div>
+        }
+    }
+?>
+    
+
 
 
 <section id="section-three" class="section-three mt-2 ">
@@ -603,23 +640,39 @@
                             foreach($national_news as $row){
                                 $folder = ceil($row->news_id/1000); ?>
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                                    <div class="child-div-two">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                        </a>
-                                        <div class="content-box">
-                                            <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                            </a>
+                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                        <div class="child-div-two">
+                                            <div class="news-image">
+                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                            </div>
+                                            <div class="content-box">
+                                                <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                            </div>
                                         </div>
-                                        
-                                    </div>
+                                    </a>
                                 </div>
                             <?php }
                         }
                     ?>
                 </div>
-
+                
+                
+                <!--Google Responsive Ad-->
+                <div class="row">
+                    <div class="col-md-12 text-center my-3">
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-5248664437668325"
+                             data-ad-slot="4326156888"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+                <!--Google Responsive Ad-->
+                
                 
                 <div class="large-section-title mt-3">
                     <div class="d-flex justify-content-between align-items-center title-border">
@@ -636,17 +689,17 @@
                             foreach($politics_news as $row){
                                 $folder = ceil($row->news_id/1000); ?>
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-6">
-                                    <div class="child-div-two">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                        </a>
-                                        <div class="content-box">
-                                            <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                            </a>
+                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                        <div class="child-div-two">
+                                            <div  class="news-image">
+                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                            </div>
+                                            <div class="content-box">
+                                                <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                            </div>
+                                            
                                         </div>
-                                        
-                                    </div>
+                                    </a>
                                 </div>
                             <?php }
                         }
@@ -690,23 +743,29 @@
     </div>
 </section>
 
-<div class="body-add-box-one advertise  py-3">
-    <div class="container leaderboard">
-        <?php
-            if($news_advertise){
-                foreach($news_advertise as $row){
-                    if($row->position == 4){
-                        if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
-                        else { $link = ""; $target = "";}
-                        echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        echo '</a>';
-                    }
-                }
+<!--Custom Ad Placement -->
+<?php
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 4){ ?>
+                <div class="body-add-box-one advertise  py-2">
+                    <div class="container leaderboard">
+                        <?php 
+                            if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
+                            else { $link = ""; $target = "";}
+                            echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
+                                echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
+                            echo '</a>';
+                        ?>
+                    </div>
+                </div>
+            <?php 
             }
-        ?>
-    </div>
-</div>
+        }
+    }
+?>
+<!--Custom Ad Placement -->
+
 
 
 <section id="section-five" class="section-five ">
@@ -729,24 +788,22 @@
                             $count++;
                             $folder = ceil($row->news_id/1000); 
                             if($count == 1){ ?>
-                                <div class="child-div-two">
-                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                    </a>
-                                    <div class="content-box">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                            <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                        </a>
-                                        <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
+                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                    <div class="child-div-two">
+                                        <div class="news-image">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                        </div>
+                                        <div class="content-box">
+                                            <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                                 <hr>
                             <?php }else{ ?>
                                 <div class="list-box box-border-none">
                                     <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                         <p><?php echo stripslashes($row->news_headline); ?></p>
                                     </a>
-                                    <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
                                 </div>
                                 <?php if($count != 3) echo "<hr>"; ?>
                             <?php }
@@ -771,24 +828,22 @@
                             $count++;
                             $folder = ceil($row->news_id/1000); 
                             if($count == 1){ ?>
-                                <div class="child-div-two">
-                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                    </a>
-                                    <div class="content-box">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                            <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                        </a>
-                                        <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
+                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                    <div class="child-div-two">
+                                        <div  class="news-image">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                        </div>
+                                        <div class="content-box">
+                                            <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                                 <hr>
                             <?php }else{ ?>
                                 <div class="list-box box-border-none">
                                     <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                         <p><?php echo stripslashes($row->news_headline); ?></p>
                                     </a>
-                                    <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
                                 </div>
                                 <?php if($count != 3) echo "<hr>"; ?>
                             <?php }
@@ -813,24 +868,22 @@
                             $count++;
                             $folder = ceil($row->news_id/1000); 
                             if($count == 1){ ?>
-                                <div class="child-div-two">
-                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                    </a>
-                                    <div class="content-box">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                            <h1 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h1>
-                                        </a>
-                                        <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
+                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                    <div class="child-div-two">
+                                        <div class="news-image">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                        </div>
+                                        <div class="content-box">
+                                            <h2 class="lead-headding"><?php echo stripslashes($row->news_headline); ?></h2>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                                 <hr>
                             <?php }else{ ?>
                                 <div class="list-box box-border-none">
                                     <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                         <p><?php echo stripslashes($row->news_headline); ?></p>
                                     </a>
-                                    <small class="list-time"><input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
                                 </div>
                                 <?php if($count != 3) echo "<hr>"; ?>
                             <?php }
@@ -868,25 +921,28 @@
 </section>
 
 
-
-<div class="body-add-box-one advertise  py-1">
-    <div class="container leaderboard">
-
-        <?php
-            if($news_advertise){
-                foreach($news_advertise as $row){
-                    if($row->position == 6){
-                        if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
-                        else { $link = ""; $target = "";}
-                        echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        echo '</a>';
-                    }
-                }
+<!--Custom Ad Placement -->
+<?php
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 6){ ?>
+                <div class="body-add-box-one advertise  py-2">
+                    <div class="container leaderboard">
+                        <?php 
+                            if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
+                            else { $link = ""; $target = "";}
+                            echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
+                                echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
+                            echo '</a>';
+                        ?>
+                    </div>
+                </div>
+            <?php 
             }
-        ?>
-    </div>
-</div>
+        }
+    }
+?>
+<!--Custom Ad Placement -->
 
 
 
@@ -915,17 +971,16 @@
                                     if($count > 0){ ?>
                                         <div class="item">
                                             <div class="floting-item-inner">
-                                                <div class="image-box">
-                                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                        <img class="owl-lazy" style="max-height: 150px; min-height: 150px;" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                                    </a>
-                                                </div>
-                                                <div class="content-box">
-                                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                        <p> <?php if($count == 1 && $row->headline_tag) echo '<span>'.$row->headline_tag.'</span>'; ?> <?php echo stripslashes($row->news_headline); ?></p>
-                                                    </a>
-                                                    
-                                                </div>
+                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                                    <div class="image-box">
+                                                        <div class="news-image">
+                                                            <img class="owl-lazy" style="max-height: 150px; min-height: 150px;" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                        </div>
+                                                    </div>
+                                                    <div class="content-box">
+                                                        <h2> <?php if($count == 1 && $row->headline_tag) echo '<span>'.$row->headline_tag.'</span>'; ?> <?php echo stripslashes($row->news_headline); ?></h2>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
                                     <?php 
@@ -987,11 +1042,10 @@
                                 <div class="center-div">
                                     <div class="ratio ratio-4x3">
                                         <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="">
-                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                         </a>
                                         <div class="overlay-content">
                                             <div class="ratio-content">
-                                                <a><span class="box-tag">মার্কেটিং</span></a>
                                                 <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                     <h1 class="ratio-headding"><?php echo stripslashes($row->news_headline); ?></h1>
                                                 </a>
@@ -1006,17 +1060,17 @@
                         <?php }
                         else{?> 
                             <div class="col-xl-6 col-lg-6 col-md-6 col-6 mt-lg-0 mt-2">
-                                <div class="child-div child-div- sub-div">
-                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
-                                    </a>
+                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="news-link">
+                                    <div class="child-div child-div- sub-div">
+                                        <div class="news-image">
+                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                        </div>
 
-                                    <div class="child-div-content mt-2">
-                                        <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="">
-                                            <h4 class="child-div-headding "> <?php echo stripslashes($row->news_headline); ?>৷</h4>
-                                        </a>
+                                        <div class="child-div-content mt-2">
+                                            <h2 class="child-div-headding "> <?php echo stripslashes($row->news_headline); ?> </h2>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         
                         <?php 
@@ -1030,24 +1084,47 @@
 </section>
 
 
-<div class="body-add-box-one advertise  py-3">
-    <div class="container leaderboard">
-
-        <?php
-            if($news_advertise){
-                foreach($news_advertise as $row){
-                    if($row->position == 5){
-                        if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
-                        else { $link = ""; $target = "";}
-                        echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
-                            echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
-                        echo '</a>';
-                    }
-                }
+<!--Custom Ad Placement -->
+<?php
+    if($news_advertise){
+        foreach($news_advertise as $row){
+            if($row->position == 5){ ?>
+                <div class="body-add-box-one advertise  py-2">
+                    <div class="container leaderboard">
+                        <?php 
+                            if($row->add_link)  { $link = 'href="'.$row->add_link.'"'; $target = 'target="_blank"'; }
+                            else { $link = ""; $target = "";}
+                            echo '<a '.$link.$target.' class="d-flex justify-content-center align-items-center">';
+                                echo '<img src="'.base_url("images/add/".$row->add_id.$row->img_ext).'">';
+                            echo '</a>';
+                        ?>
+                    </div>
+                </div>
+            <?php 
             }
-        ?>
+        }
+    }
+?>
+<!--Custom Ad Placement -->
+
+<!--Google Responsive Ad-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center my-3">
+            <!-- e-kotha-responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5248664437668325"
+                 data-ad-slot="4326156888"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 </div>
+<!--Google Responsive Ad-->
 
 
 <!------------------ ********* ------------------->
@@ -1074,14 +1151,14 @@
                                 $folder = ceil($item->news_id/1000); 
                                 if($count < 4 ){ ?>
                                     <div class="list-box <?php if($count == 3) echo 'border-0'?>" >
-                                        <div class="image-part">
-                                            <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
-                                        </div>
-                                        <div class="content-list">
-                                            <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>">
-                                                <p><?php echo stripslashes($item->news_headline); ?></p>
-                                            </a>
-                                        </div>
+                                        <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>" class="news-link">
+                                            <div class="image-part news-image">
+                                                <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
+                                            </div>
+                                            <div class="content-list">
+                                                <h3><?php echo stripslashes($item->news_headline); ?></h3>
+                                            </div>
+                                        </a>
                                     </div>
                                 <?php 
                                 }   
@@ -1108,14 +1185,14 @@
                                 $folder = ceil($item->news_id/1000); 
                                 if($count < 4 ){ ?>
                                     <div class="list-box <?php if($count == 3) echo 'border-0'?>" >
-                                        <div class="image-part">
-                                            <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
-                                        </div>
-                                        <div class="content-list">
-                                            <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>">
-                                                <p><?php echo stripslashes($item->news_headline); ?></p>
-                                            </a>
-                                        </div>
+                                        <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>" class="news-link">
+                                            <div class="image-part news-image">
+                                                <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
+                                            </div>
+                                            <div class="content-list">
+                                                <h3><?php echo stripslashes($item->news_headline); ?></h3>
+                                            </div>
+                                        </a>
                                     </div>
                                 <?php 
                                 }   
@@ -1143,14 +1220,14 @@
                                 $folder = ceil($item->news_id/1000); 
                                 if($count < 4 ){ ?>
                                     <div class="list-box <?php if($count == 3) echo 'border-0'?>" >
-                                        <div class="image-part">
-                                            <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
-                                        </div>
-                                        <div class="content-list">
-                                            <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>">
-                                                <p><?php echo stripslashes($item->news_headline); ?></p>
-                                            </a>
-                                        </div>
+                                        <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>" class="news-link">
+                                            <div class="image-part news-image">
+                                                <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
+                                            </div>
+                                            <div class="content-list">
+                                                <h3><?php echo stripslashes($item->news_headline); ?></h3>
+                                            </div>
+                                        </a>
                                     </div>
                                 <?php 
                                 }   
@@ -1199,9 +1276,7 @@
                             }
                         }
                     ?>
-              
             </div>
-            
         </div>
     </div>
 </div>

@@ -14,6 +14,7 @@
       <link rel="stylesheet" type="text/css" href="<?= base_url('assets/app-assets/css/app.css'); ?>">
 
       <style>
+          .erp{background: #e51c1c; color: white; text-align: center; border-radius: 2px; padding: 5px 0;}
           @media(min-width: 991px) {
               .login-form { height: 0px;  }
               .login-form img { display: none; }
@@ -22,6 +23,8 @@
             background: #e51c1c; color: white; text-align: center; border-radius: 2px; padding: 5px 0;
           }
       </style>
+      
+      <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <!-- END : Head-->
 
@@ -74,7 +77,7 @@
                                                                       <img src="<?= base_url('images/ekattorer-kotha-logo.png') ?>" alt="" class="img-fluid mb-2 "  width="100%">
                                                                   </center>
                                                               </div>
-                                                              <form class="login100-form validate-form" action='<?php echo base_url(); ?>login' method='POST'>
+                                                              <form class="login100-form validate-form" action='<?php echo base_url(); ?>auth/login' method='POST'>
                                                                   <h4 class="mb-2 card-title text-center">Login</h4>
                                                                   <p class="card-text mb-3">
                                                                       <hr>
@@ -86,12 +89,24 @@
                                                                             echo isset($errors[$password['name']]) ? $errors[$password['name']] : '';
                                                                       ?>
                                                                   </div>
+                                                                  
+                                                                    <?php if($Error_Message){ ?>
+                                                                        <div>
+                                                                            <p class="erp"><?php echo $Error_Message;?></p>
+                                                                        </div>
+                                                                    <?php } ?>
 
                                                                   <?php echo form_input($login, '', 'class="form-control mb-3" placeholder="Username"'); ?>
                                                                   <?php echo form_password($password, '', 'class="form-control mb-1 pwd  input-field" placeholder="Password"'); ?>
 
                                                                   <input type="checkbox" class="reveal mt-2 mb-3"> Show Password
+                                                                  
+                                                                  
                                                                   <br>
+                                                                  <div class="g-recaptcha" data-sitekey="<?php echo $this->config->item('google_key') ?>"></div> 
+                                                                  <br/>
+                                                                  
+                                                                  
                                                                   <div class="fg-actions text-right">
                                                                       <div class=" text-right">
                                                                           <button class="btn btn-primary" style="width: 100%">

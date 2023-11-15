@@ -76,70 +76,34 @@
         <div class="row">
             <div class="col-xl-3 col-lg-6 order-xl-1 order-lg-2 order-2 mt-lg-0 mt-2">
                 <div class="div-title">
-                    <h3 class="title-one">তাজা খবর</h3>
+                    <h3 class="title-one pt-0 pb-2"> তাজা খবর </h3>
                 </div>
-
-                <?php if($top_news) {?>
-                    <div class="owl-carousel owl-theme list-slider">
-                        <?php 
+                <div class="list-div position-relative" style="overflow: hidden; max-height: 430px; overflow-y: visible;">
+                    <?php 
+                        if($top_news) {
                             $count = 0;
                             $numItems = count($top_news);
                             foreach($top_news as $row){
-                                
-                                $count++ ;   
-                                if($count == 1){ ?>
-                                    <div class="item">
-                                        <div class="group-list-item">  
-                                <?php } 
-                                if($count >= 1 && $count <=5){ ?>
-                                            <div class="list-box">
-                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                    <p><?php echo stripslashes($row->news_headline); ?></p>
-                                                </a>
-                                                <a href="<?php echo base_url($row->cat_key_name); ?>"><span class="list-tag"><?php echo $row->cat_name; ?></span></a>
-                                                <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
-                                            </div>
-                                        
-                                <?php } 
-                                if($count == 5){ ?>
+                                $count++ ;  ?>
+                                <div class="item">
+                                    <div class="group-list-item">  
+                    
+                                        <div class="list-box">
+                                            <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
+                                                <p><?php echo stripslashes($row->news_headline); ?></p>
+                                            </a>
+                                            <a href="<?php echo base_url($row->cat_key_name); ?>"><span class="list-tag"><?php echo $row->cat_name; ?></span></a>
+                                            <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
                                         </div>
                                     </div>
-                                <?php }
-                                if($count == 6){ ?>
-                                    <div class="item">
-                                        <div class="group-list-item">  
-                                <?php } 
-                                if($count >= 6 && $count <=10){ ?>
-                                            <div class="list-box">
-                                                <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
-                                                    <p><?php echo stripslashes($row->news_headline); ?></p>
-                                                </a>
-                                                <a href="<?php echo base_url($row->cat_key_name); ?>"><span class="list-tag"><?php echo $row->cat_name; ?></span></a>
-                                                <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
-                                            </div>
-                                        
-                                <?php } 
-                                if($count == 10){ ?>
-                                        </div>
-                                    </div>
-                                <?php }
-                                else{
-                                    if($count == $numItems){ ?>
-                                        </div>
-                                    </div>
-                                    <?php }
-                                }
-                                ?>
-                                
+                                </div>
                             <?php 
                             }
-                        ?>
-
-                    </div>
-                <?php }
-                ?>
+                        }
+                    ?>
+                </div>
             </div>
-
+            
             <div class="col-xl-4 col-lg-6 border-xl-1 order-lg-1 order-1 ">
                 <?php
                     if($lead_news){
@@ -184,7 +148,7 @@
                                         <div class="ratio">
                                             <img src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>">
                                         </div>
-                                        <div class="child-div-content">
+                                        <div class="child-div-content <?php if($count == 2) echo 'border-0'; ?>">
                                             <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="child-box-tag"><?php echo stripslashes($row->news_headline);?></a>
                                             <br>
                                             <small class="list-time"> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></small>
@@ -197,6 +161,7 @@
                     ?>
                 </div>
             </div>
+
             
             <div class="col-xl-3  col-lg-12 order-4 order-xl-4  order-lg-4 order-3">
                 <div class="div-title">
@@ -268,7 +233,8 @@
 
 
 
-<section id="slider-box-positioning" class="slider-box-positioning bg-light py-2 my-5 wc" style="width: 100%;float: left;background: linear-gradient(45deg, #3c313100  0%, #3c313100  100%), url(<?php echo base_url('assets/bg-wc.jpg'); ?>) no-repeat center center fixed; background-size: cover">
+
+<section id="slider-box-positioning" class="slider-box-positioning bg-light py-2 my-5 wc d-none" style="width: 100%;float: left;background: linear-gradient(45deg, #3c313100  0%, #3c313100  100%), url(<?php echo base_url('assets/bg-wc.jpg'); ?>) no-repeat center center fixed; background-size: cover">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
@@ -317,9 +283,240 @@
 
 
 
+
+<style>
+    .segment-row .segment-body{
+        background-repeat: no-repeat !important;
+        background-size: 100% 100% !important;
+    }
+    .segment-row .news-segment-post h2{
+        font-size: 1.3rem;
+    }
+    
+    .segment-row .news-segment-post p{
+        font-size: 1rem;
+    }
+    .segment-row .segment-title h2{
+        border-left: 5px solid;
+        line-height: 1;
+        margin-bottom: 15px;
+        font-size: 25px;
+        padding-top: 2px;
+        font-weight: bold;
+    }
+        .segment-row .segment-title h2 a{
+            padding-left: 10px;
+        }
+
+    .segment-row .h-tag span {
+        padding: 2px 8px;
+        font-size: 14px;
+        padding-top: 4px;
+    } 
+
+    .segment-row .news-image img{
+        margin-bottom: 10px; 
+        width: 100%; 
+    }
+    .segment-row .news-image img.lazy {
+        background-image: url(images/lazy.jpg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+    }
+    .segment-banner img{
+        max-width: 100%; 
+    }
+
+    a.segment-link{
+        color: var(--link-color); 
+    }
+    a.segment-link:hover {
+        color: var(--hover-color);
+    }
+    a h2:hover{
+        color: unset; 
+    }
+    .segment-row .bd-r8 {
+        border-right: 1px solid ;
+    }
+
+    .segment-row .bd-bt {
+        display: none; 
+    }
+    .mobile-show{
+        display : none; 
+    }
+
+    @media(max-width: 768px){
+        .segment-row .news-segment-post h2 {
+            font-size: 1.1rem;
+        }
+        .segment-row .news-segment-post p {
+            display: none;
+        }
+        .mobile-show{
+            display: block; 
+        }
+        .segment-row .bd-bt {
+            display: block;
+            border-bottom: 1px solid ;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        .segment-row .mbl-bd-r8-none{
+            border-right: 0px; 
+        }
+        .segment-row .segment-title h2 {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<?php
+    if($segment_news){
+        foreach($segment_news as $s_row){ ?>
+
+            <?php
+                $title_color = $title_status = $headline_color = $hover_color = $border_color = $border_status  = '';
+                $details_status = $details_color = $time_status = $time_color   = ''; 
+                $banner_status = '';
+
+                
+                if($s_row-> segment_title_show){
+                    $title_status       = 1; 
+                    $title_color        = $s_row-> segment_title_color;
+                }
+                if($s_row->banner_show == 1){
+                    $banner_status = 1; 
+                }
+
+                if($s_row -> segment_bg_status == 1){
+                    $segment_padding    = 'px-3 py-3';
+                    
+                    $hover_color        = $s_row-> segment_link_hover;
+                    $border_status      = 1;
+                    $border_color       = $s_row->segment_bg_border;
+
+                    $headline_color     = $s_row-> segment_headline_color;
+
+                    if($s_row -> segment_bg_type == 1){
+                        $bg = 'url('.base_url('images/segment/bg/'.$s_row->segment_id.$s_row->segment_bg_img).')';
+                    }
+                    if($s_row -> segment_bg_type == 2){
+                        $bg = $s_row->segment_bg_color;
+                    }
+                    if($s_row ->segment_details_status == 1){
+                        $details_status = 1; 
+                        $details_color  = $s_row ->segment_details_color; 
+                    }
+                    if($s_row ->segment_time_status == 1){
+                        $time_status = 1; 
+                        $time_color  = $s_row ->segment_time_color; 
+                    }
+                    
+                }
+                else{
+                    $bg = 'unset';
+                    $segment_padding = '';
+                }
+            ?>
+
+            <section class="segment-row">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 left-part">
+                            <div class="segment-body <?php echo $segment_padding; ?>" style="background: <?= $bg; ?> ; <?php if($border_status == 1) { ?> border-bottom: 2px solid <?= $border_color; ?> <?php } ?>">
+                                <div class="row">
+                                    <?php if($banner_status){ ?>
+                                        <div class="col-md-12 text-center">
+                                            <?php
+                                                if($s_row->segment_banner_img){ ?> 
+                                                    <div class="segment-banner my-3 mb-4">
+                                                        <a  href="<?php echo base_url('topic?subject='.$s_row->segment_tag); ?>">
+                                                            <img src="<?= base_url('images/segment/banner/'.$s_row->segment_id.$s_row->segment_banner_img); ?>" alt="<?php echo stripcslashes($s_row->segment_title); ?>">
+                                                        </a>
+                                                    </div>
+                                                <?php }
+                                            ?>
+                                            
+                                        </div>
+                                    <?php } ?>
+                                    <?php if($title_status){ ?>
+                                        <div class="col-md-12">
+                                            <div class="segment-title">
+                                                <h2 style="border-color: <?= $border_color; ?>"><a class="segment-link" style="--link-color: <?= $title_color; ?> ;--hover-color: <?= $hover_color; ?>" href="<?php echo base_url('topic?subject='.$s_row->segment_tag); ?>"><span> <?= $s_row->segment_title; ?> </span> </a></h2>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <?php
+                                                $news_data  = $this->query_model->fetch_tag_news($s_row->segment_tag, 4);
+                                                if($news_data){
+                                                    $count = '';
+                                                    foreach($news_data as $row){
+                                                        $count++;
+                                                        $folder_name = ceil($row->news_id / 1000); if($count < 5){ ?>
+                                                
+                                                            <div class="col-md-3 col-6 <?php if($count != 4) echo 'bd-r8'; if($count == 2) echo " mbl-bd-r8-none"; ?>" style="border-color: <?= $border_color; ?>">
+                                                                <div class="news-segment-post">
+                                                                    <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>" class="segment-link" style="--link-color: <?= $headline_color; ?> ;--hover-color: <?= $hover_color; ?>">
+                                                                        <div class="news-image top-image">
+                                                                            <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/thumb' . '/' . $row->news_id . $row->img_ext) : $default_image ?>" alt="">
+                                                                        </div>
+                                                                        <?php if(isset($row->headline_tag)){ if($row->headline_tag){ ?>
+                                                                            <p class="mb-0 h-tag"> <span style="background: <?= $border_color; ?>; color: <?= $title_color; ?>"> <?= $row->headline_tag; ?> </span></p>
+                                                                        <?php } } ?>
+                                                                        <h2> <?php echo stripslashes($row->news_headline); ?> </h2>
+                                                                        <?php
+                                                                            if($details_status){ ?> 
+                                                                                <p style="color: <?= $details_color; ?>"><?php echo word_limiter($row->news_details_brief, 15); ?></p>
+                                                                            <?php }
+                                                                        ?>
+                                                                        <?php
+                                                                            if($time_status){ ?> 
+                                                                                 <div class="news-time-segment" style="color: <?= $time_color; ?>">
+                                                                                    <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date(" m d Y  H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>">
+                                                                                </div>
+                                                                            <?php }
+                                                                        ?>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+
+                                                            <?php if(count($news_data) > 2  && $count == 2){ ?>
+                                                                <div class="col-md-12 mobile-show"> <div class="bd-bt" style="border-color: <?= $border_color; ?>" > </div> </div>    
+                                                            <?php } ?>
+                                                        
+                                                        <?php 
+                                                        }
+                                                    }
+                                                }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        <?php }
+    }
+?>
+
+
+
+
+
+
 <section id="section-four" class="section-four mt-5">
     <div class="container">
-        <div class="section-title-style mb-3">
+        <div class="section-title-style mb-3" style="border-bottom: 3px solid #ec3535;">
             <h1 class="overlay-title">সিলেটের কথা</h1>
             <h3 class="child-overlay-title">সিলেটের কথা</h3>
         </div>
@@ -355,7 +552,7 @@
                                             <div class="author-box">
                                                 <div class="d-flex justify-content-start align-items-center">
                                                     <div class="detail-box d-flex justify-content-start align-items-center">
-                                                        <div class="time"><span class="mark"><?php if($row->sub_cat_name) echo $row->sub_cat_name; else echo "সিলেট"; ?></span> - <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></div>
+                                                        <div class="time"><span class="mark"><?php if($row->sub_cat_name) echo $row->sub_cat_name; else echo "সিলেট"; ?></span> |  <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -372,7 +569,7 @@
                                     echo '<div class="classified-row py-2"></div>'; 
                                 }
                                 ?>
-                            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-6">
                                 <div class="child-div-two">
                                     <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                          <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.$thumb.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">  
@@ -433,6 +630,7 @@
         </div>
     </div>
 </div>
+
 
 <section id="section-three" class="section-three mt-2 ">
     <div class="container">
@@ -555,6 +753,24 @@
                 }
             }
         ?>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5248664437668325"
+                 crossorigin="anonymous"></script>
+            <!-- e-kotha-responsive -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-5248664437668325"
+                 data-ad-slot="4326156888"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
 </div>
 
@@ -719,7 +935,7 @@
 
 
 
-<div class="body-add-box-one advertise  py-3">
+<div class="body-add-box-one advertise  py-1">
     <div class="container leaderboard">
 
         <?php
@@ -739,27 +955,8 @@
 </div>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5248664437668325"
-                 crossorigin="anonymous"></script>
-            <!-- e-kotha-responsive -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5248664437668325"
-                 data-ad-slot="4326156888"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-    </div>
-</div>
 
-
-<section id="slider-box-positioning" class="slider-box-positioning bg-light pt-2 pb-3 my-5">
+<section id="slider-box-positioning" class="slider-box-positioning bg-light pt-2 pb-3 my-4">
     <div class="container">
         <div class="row">
             <div class="col-xl-12">
@@ -859,7 +1056,8 @@
                                             <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                         </a>
                                         <div class="overlay-content">
-                                            <div class="ratio-content">>
+                                            <div class="ratio-content">
+                                                <a><span class="box-tag">মার্কেটিং</span></a>
                                                 <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                     <h1 class="ratio-headding"><?php echo stripslashes($row->news_headline); ?></h1>
                                                 </a>
@@ -914,25 +1112,6 @@
                 }
             }
         ?>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5248664437668325"
-                 crossorigin="anonymous"></script>
-            <!-- e-kotha-responsive -->
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5248664437668325"
-                 data-ad-slot="4326156888"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
     </div>
 </div>
 

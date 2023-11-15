@@ -27,10 +27,9 @@
     <script src="<?= base_url('assets/web/js/main.js'); ?>"></script>
     <script src="<?= base_url('assets/web/js/jquery.lazy.min.js') ?>"></script>
     <script src="<?= base_url('assets/web/vendor/OwlCarousel2-2.3.4/dist/owl.carousel.js'); ?>"></script>
-
-
+    
     <?php if($this->uri->segment(1) == 'details'){ ?>
-        <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6480786b7a3efa0012933782&product=sticky-share-buttons&source=platform" async="async"></script>
+        <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=648079ae19ebc20012fab456&product=sop' async='async'></script>
     <?php } ?>
 
     <?php
@@ -64,7 +63,7 @@
 
     <div id="mySidenav" class="sidenav">
         <a clas href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a class="sidebar-link" href="<?=  base_url()?>"> <i class="fas fa-home"></i> মুলপাতা</a>
+        <a class="sidebar-link" href="<?=  base_url()?>"> মূলপাতা</a>
         <a class="mt-2 sidebar-link" href="<?=  base_url('sylhet')?>">সিলেটের কথা</a>
         <a class="mt-2 sidebar-link" href="<?=  base_url('national')?>">দেশের কথা</a>
         <a class="mt-2 sidebar-link" href="<?=  base_url('aboard')?>">প্রবাসের কথা</a>
@@ -94,7 +93,7 @@
                             <span class="B-time"><?php echo 'আজ '.bn_convert(date('l, d M Y')); ?></span>
                         </div>
                         <div class="ePaper-button">
-                            <a href="#" target="_blank"> ই-পেপার  <i class=" blink_me fas fa-hand-pointer"></i></a>
+                            <!-- <a href="#" target="_blank"> ই-পেপার  <i class=" blink_me fas fa-hand-pointer"></i></a> -->
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-8 d-md-flex justify-content-center align-items-center">
@@ -105,9 +104,9 @@
 
                     <div class="col-xl-4 col-lg-4 col-md-4 col-2 d-md-flex justify-content-center align-items-center">
 
-                        <a href="#">
+                        <!-- <a href="#">
                             <img class="mbl-epaper" src="<?php echo base_url('images/ePaper.png')?>" alt="e-paper Ekattorer kotha">
-                        </a>
+                        </a> -->
 
                         
                         <div class="search-box">
@@ -138,8 +137,23 @@
 
 
         <!---main navbar-->
+        <style>
+            .fixed-nav {
+                border-bottom: 1px solid #fff;
+                -moz-box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+                -webkit-box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+                box-shadow: 0 5px 5px rgba(182, 182, 182, 0.15);
+            }
+            @media(max-width: 991px){
+                #fixed_top_navbar {
+                    height: 68px;
+                    background: #0000000f !important;
+                    z-index: 0;
+                }
+            }
+        </style>
 
-        <div id="fixed_top_navbar" class="container fixed-nav" >
+        <div id="fixed_top_navbar" class="fixed-nav" >
             <div class="main-nav">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container-fluid">
@@ -250,10 +264,9 @@
     <?php if($this->uri->segment(1) == ''){
         
         if($latest_news) { ?>
-            <section class="section-slider mb-3">
+            <section class="section-slider">
                 <div class="container">
                     <div class="header-slider py-3 ">
-
                         <span class="heading-title">শিরোনাম</span>
                         <div class="carousal-custom">
                             <div class="owl-carousel  header-owl">
@@ -264,7 +277,7 @@
                                                 <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                     <p class=""><?php echo stripslashes($row->news_headline); ?></p>
                                                 </a>
-                                                <span class="time"> <i class="fab fa-ethereum"></i> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></span>
+                                                <!-- <span class="time"> <i class="fab fa-ethereum"></i> <input type="hidden" class="previous_date" id="prev_time" data-news_id="<?php echo $row->news_id ?>" value="<?php echo date("m d Y H:i:s", strtotime($row->news_pub_date . ' ' . $row->news_pub_time)) ?>"></span> -->
                                             </div>
                                         </div>
                                     <?php 

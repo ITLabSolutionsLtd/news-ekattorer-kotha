@@ -1258,7 +1258,7 @@ class Query_model extends CI_Model{
 
 		function category_wise_news_info($category, $news_id, $limit)
 		{
-			$query=$this-> db-> query("SELECT news_common_info.news_id, news_common_info.news_headline,news_common_info.news_details_brief, news_common_info.news_status, news_common_info.img_ext, category_info.cat_key_name, category_info.cat_name, news_common_info.news_pub_date,news_common_info.news_pub_time
+			$query=$this-> db-> query("SELECT news_common_info.news_id, news_common_info.news_headline,news_common_info.news_details_brief, news_common_info.news_status, news_common_info.img_ext, category_info.cat_key_name, category_info.cat_name, news_common_info.news_pub_date,news_common_info.news_pub_time, news_common_info.news_mod_date,news_common_info.news_mod_time
 													FROM news_common_info, category_info
 													WHERE news_common_info.news_status!=0 AND news_common_info.news_status!=4 AND category_info.cat_id=news_common_info.cat_id AND category_info.cat_key_name='".$category."' AND news_common_info.news_id!='".$news_id."'
 														ORDER BY news_id DESC LIMIT ".$limit."");
@@ -1308,13 +1308,13 @@ class Query_model extends CI_Model{
 			$segment_name = $this -> uri -> segment(4);
 
 			if($segment_name){
-				$query=$this-> db-> query("SELECT news_common_info.news_id,news_common_info.cat_id, news_common_info.news_headline, news_common_info.news_status, category_info.cat_key_name, category_info.cat_name, news_common_info.img_ext, news_common_info.news_reporter, news_common_info.news_details_brief, news_common_info.catStatus, news_common_info.news_pub_date,news_common_info.news_pub_time, news_common_info.news_mod_date,writer_info.writer_id,writer_info.writer_name
+				$query=$this-> db-> query("SELECT news_common_info.news_id,news_common_info.cat_id, news_common_info.news_headline, news_common_info.news_status, category_info.cat_key_name, category_info.cat_name, news_common_info.img_ext, news_common_info.news_reporter, news_common_info.news_details_brief, news_common_info.catStatus, news_common_info.news_pub_date,news_common_info.news_pub_time, news_common_info.news_mod_date,news_common_info.news_mod_time,writer_info.writer_id,writer_info.writer_name
 											FROM news_common_info, category_info,writer_info
 											WHERE news_common_info.news_status != 10 AND news_common_info.news_status != 0 AND news_common_info.news_status != 4 AND category_info.cat_id=news_common_info.cat_id AND category_info.cat_key_name='".$category."' 
 											ORDER BY news_id DESC LIMIT ".$segment_name.",".$limit."");
 			}
 			else{
-				$this->db->select('news_common_info.news_id,news_common_info.headline_tag,news_common_info.cat_id, news_common_info.news_headline, news_common_info.news_status,news_common_info.author_id, category_info.cat_key_name, category_info.cat_name, news_common_info.img_ext, news_common_info.news_reporter, news_common_info.news_details_brief, news_common_info.catStatus, news_common_info.news_pub_date,news_common_info.news_pub_time, news_common_info.news_mod_date,writer_info.writer_id,writer_info.writer_name');
+				$this->db->select('news_common_info.news_id,news_common_info.headline_tag,news_common_info.cat_id, news_common_info.news_headline, news_common_info.news_status,news_common_info.author_id, category_info.cat_key_name, category_info.cat_name, news_common_info.img_ext, news_common_info.news_reporter, news_common_info.news_details_brief, news_common_info.catStatus, news_common_info.news_pub_date,news_common_info.news_pub_time, news_common_info.news_mod_date,news_common_info.news_mod_time,writer_info.writer_id,writer_info.writer_name');
 				$this->db->from('news_common_info');
 				$this->db->join('writer_info','news_common_info.author_id = writer_info.writer_id', 'left');
 				$this->db->join('category_info','category_info.cat_id = news_common_info.cat_id');
@@ -1655,7 +1655,7 @@ class Query_model extends CI_Model{
 		
 		function subCategoryWiseNewsUpdated($subCategory, $limit)	
 		{
-			$this->db->select('news_common_info.news_id, news_common_info.news_headline,news_common_info.sub_cat_id,news_common_info.author_id,writer_info.writer_name, news_common_info.news_pub_time, news_common_info.news_reporter,category_info.cat_key_name,category_info.cat_name, news_common_info.news_details_brief, news_common_info.img_ext,category_info.cat_key_name,news_common_info.news_status, news_common_info.cat_id, sub_category_info.sub_cat_name, news_common_info.news_pub_date, news_common_info.news_mod_date');
+			$this->db->select('news_common_info.news_id, news_common_info.news_headline,news_common_info.sub_cat_id,news_common_info.author_id,writer_info.writer_name, news_common_info.news_pub_time, news_common_info.news_reporter,category_info.cat_key_name,category_info.cat_name, news_common_info.news_details_brief, news_common_info.img_ext,category_info.cat_key_name,news_common_info.news_status, news_common_info.cat_id, sub_category_info.sub_cat_name, news_common_info.news_pub_date, news_common_info.news_mod_date,news_common_info.news_mod_time');
 			$this->db->from('category_info, news_common_info, sub_category_info');
 			$this->db->where('category_info.cat_id = sub_category_info.category_id');
 			$this->db->where('sub_category_info.sub_category_id = news_common_info.sub_cat_id');
@@ -1806,7 +1806,7 @@ class Query_model extends CI_Model{
 		function date_wise_news_list($date)
 		{
 			$date = date('Y-m-d', strtotime($date)); 
-			$query = $this->db->query("SELECT `news_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_details_brief`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`, `news_common_info`.`news_reporter`, `news_common_info`.`news_pub_date`,`news_common_info`.`news_pub_time`
+			$query = $this->db->query("SELECT `news_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_details_brief`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`, `news_common_info`.`news_reporter`, `news_common_info`.`news_pub_date`,`news_common_info`.`news_pub_time`,`news_common_info`.`news_mod_date`,`news_common_info`.`news_mod_time`
 										FROM `news_info`,`category_info`,`news_common_info`
 										WHERE `news_common_info`.`news_status` != 10 AND `news_common_info`.`news_status`!=0 AND `news_common_info`.`news_status`!=4 AND `news_info`.`news_id` = `news_common_info`.`news_id` AND `category_info`.`cat_id`=`news_common_info`.`cat_id` AND cast(`news_pub_date` as date)='" . $date . "'
 										ORDER BY `news_info`.`news_id` DESC");
@@ -1846,7 +1846,7 @@ class Query_model extends CI_Model{
 		// }
 		function keyword_wise_news_list($news_keyword)
 		{
-			$query = $this->db->query("SELECT news_info.news_id, news_common_info.news_headline,news_common_info.headline_tag,news_common_info.cat_id, news_common_info.news_details_brief, news_common_info.news_status, category_info.cat_key_name, category_info.cat_name, news_common_info.img_ext, news_common_info.news_reporter, news_common_info.news_pub_date,news_common_info.news_pub_time
+			$query = $this->db->query("SELECT `news_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_details_brief`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`, `news_common_info`.`news_reporter`, `news_common_info`.`news_pub_date`,`news_common_info`.`news_pub_time`,`news_common_info`.`news_mod_date`,`news_common_info`.`news_mod_time`
 							FROM news_info,category_info,news_common_info LEFT JOIN news_tag_info ON news_common_info.news_id = news_tag_info.news_id
 							WHERE news_common_info.news_status != 10 AND news_common_info.news_status!=0 AND category_info.cat_id=news_common_info.cat_id AND news_info.news_id = news_common_info.news_id
 							AND (news_common_info.news_headline LIKE '%" . $news_keyword . "%' OR news_info.news_sub_headline LIKE '%" . $news_keyword ."%' OR news_tag_info.news_tag LIKE '%" . $news_keyword . "%' )
@@ -2118,7 +2118,7 @@ class Query_model extends CI_Model{
 		
 		function date_key_wise_news_list($date,$news_keyword)
 		{
-			$query=$this-> db-> query("SELECT `news_common_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_brief_info`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`, `news_common_info`.`news_mod_date`, `news_common_info`.`news_mod_time`
+			$query=$this-> db-> query("SELECT `news_info`.`news_id`, `news_common_info`.`news_headline`,`news_common_info`.`news_details_brief`, `category_info`.`cat_key_name`, `category_info`.`cat_name`, `news_common_info`.`img_ext`, `news_common_info`.`news_reporter`, `news_common_info`.`news_pub_date`,`news_common_info`.`news_pub_time`,`news_common_info`.`news_mod_date`,`news_common_info`.`news_mod_time`
 										FROM `news_info`,`category_info`,`news_common_info`
 										WHERE `news_common_info`.`news_status` !=0 AND `news_common_info`.`news_status` !=4 
 										AND `category_info`.`cat_id`=`news_common_info`.`cat_id` 
@@ -2290,7 +2290,7 @@ class Query_model extends CI_Model{
 
 		function common_news_info_updated($category, $limit)	
 		{
-			$query=$this-> db-> query("SELECT `view_news_common_info`.`news_id`,`view_news_common_info`.`headline_tag`,`view_news_common_info`.`news_details_brief`,`view_news_common_info`.`news_headline`, `view_news_common_info`.`img_ext`, `view_news_common_info`.`news_pub_date`, `view_news_common_info`.`news_pub_time`
+			$query=$this-> db-> query("SELECT `view_news_common_info`.`news_id`,`view_news_common_info`.`headline_tag`,`view_news_common_info`.`news_details_brief`,`view_news_common_info`.`news_headline`, `view_news_common_info`.`img_ext`, `view_news_common_info`.`news_pub_date`, `view_news_common_info`.`news_pub_time`, `view_news_common_info`.`news_mod_date`, `view_news_common_info`.`news_mod_time`
 							FROM category_info, view_news_common_info
 							WHERE `view_news_common_info`.`news_status` != 0 AND `category_info`.`cat_id`=`view_news_common_info`.`cat_id` AND `category_info`.`cat_key_name`= '".$category."'
 							ORDER BY `news_id` DESC LIMIT ".$limit."");
@@ -2302,7 +2302,7 @@ class Query_model extends CI_Model{
 
 		function common_news_info_updated_opinion($category, $limit)	
 		{
-			$query=$this-> db-> query("SELECT `view_news_common_info`.`news_id`,`view_news_common_info`.`news_headline`, `view_news_common_info`.`news_pub_date`, `view_news_common_info`.`news_pub_time`,`view_news_common_info`.`img_ext`,`news_writer_info`.`author_ids`, `news_writer_info`.`reporter_ids`,`writer_info`.`writer_id`,`writer_info`.`writer_name`, `writer_info`.`img_ext` as `writer_image` 
+			$query=$this-> db-> query("SELECT `view_news_common_info`.`news_id`,`view_news_common_info`.`news_headline`, `view_news_common_info`.`news_pub_date`, `view_news_common_info`.`news_pub_time`,`view_news_common_info`.`img_ext`,`news_writer_info`.`author_ids`, `news_writer_info`.`reporter_ids`,`writer_info`.`writer_id`,`writer_info`.`writer_name`, `writer_info`.`img_ext` as `writer_image`, `view_news_common_info`.`news_mod_date`, `view_news_common_info`.`news_mod_time`
 							FROM `view_news_common_info`,`category_info`, `news_writer_info` LEFT JOIN `writer_info` ON `news_writer_info`.`author_ids` = `writer_info`.`writer_id`
 							WHERE `view_news_common_info`.`news_id` = `news_writer_info`.`news_id` AND `view_news_common_info`.`news_status` != 0 AND `category_info`.`cat_id`=`view_news_common_info`.`cat_id` AND `category_info`.`cat_key_name`= '".$category."'
 							ORDER BY news_id DESC LIMIT ".$limit."");
@@ -2313,11 +2313,11 @@ class Query_model extends CI_Model{
 		
 		function common_news_info_updated_sylhet($category, $limit)	
 		{
-			$query=$this-> db-> query("SELECT `view_news_common_info`.`news_id`,`view_news_common_info`.`news_headline`,`view_news_common_info`.`news_details_brief`, `view_news_common_info`.`img_ext`,`view_news_common_info`.`news_pub_date` ,`view_news_common_info`.`news_pub_time`,`sub_category_info`.`sub_cat_name`
+			$query=$this-> db-> query("SELECT `view_news_common_info`.`news_id`,`view_news_common_info`.`news_headline`,`view_news_common_info`.`news_details_brief`, `view_news_common_info`.`img_ext`,`view_news_common_info`.`news_pub_date` ,`view_news_common_info`.`news_pub_time`,`sub_category_info`.`sub_cat_name`,`view_news_common_info`.`news_mod_date` ,`view_news_common_info`.`news_mod_time`
 							FROM `category_info`, `view_news_common_info` LEFT JOIN `sub_category_info` ON `view_news_common_info`.`sub_cat_id` = `sub_category_info`.`sub_category_id`
 							WHERE `view_news_common_info`.`news_status` != 0 AND `category_info`.`cat_id`=`view_news_common_info`.`cat_id` AND `category_info`.`cat_key_name`= '".$category."'
 							ORDER BY `news_id` DESC LIMIT ".$limit."");
-			
+
 			if($query->num_rows() > 0) return $query-> result();
 			else return false;	
 		}
@@ -2372,7 +2372,7 @@ class Query_model extends CI_Model{
 					$NewsRange = $LastNewsID - ($LastNewsID/2);
 			}
 			
-			$query=$this-> db-> query("SELECT news_reader_info.news_id, news_headline, img_ext, view_news_common_info.cat_id, news_reader_info.news_reader, category_info.cat_key_name, category_info.cat_name,view_news_common_info.news_pub_date,view_news_common_info.news_pub_time	         
+			$query=$this-> db-> query("SELECT news_reader_info.news_id, news_headline, img_ext, view_news_common_info.cat_id, news_reader_info.news_reader, category_info.cat_key_name, category_info.cat_name,view_news_common_info.news_pub_date,view_news_common_info.news_pub_time,view_news_common_info.news_mod_date,view_news_common_info.news_mod_time	         
 										FROM view_news_common_info, category_info, news_reader_info
 										WHERE view_news_common_info.news_status != 0 
 										AND view_news_common_info.news_status != 4 
@@ -2412,7 +2412,7 @@ class Query_model extends CI_Model{
 		/*************************************************************************/
 		function head_line_info($limit)
 		{
-			$this->db->select('view_news_common_info.news_id,view_news_common_info.headline_tag, view_news_common_info.news_headline, view_news_common_info.news_details_brief, view_news_common_info.img_ext, category_info.cat_key_name, category_info.cat_name,view_news_common_info.news_pub_date,view_news_common_info.news_pub_time');
+			$this->db->select('view_news_common_info.news_id,view_news_common_info.headline_tag, view_news_common_info.news_headline, view_news_common_info.news_details_brief, view_news_common_info.img_ext, category_info.cat_key_name, category_info.cat_name,view_news_common_info.news_pub_date,view_news_common_info.news_pub_time, view_news_common_info.news_mod_date,view_news_common_info.news_mod_time');
 			$this->db->from('view_news_common_info, category_info');
 			$this->db->where('view_news_common_info.cat_id = category_info.cat_id');
 			$this->db->where('view_news_common_info.news_status', 1);
@@ -2439,10 +2439,11 @@ class Query_model extends CI_Model{
 
 		
 
-			$query=$this-> db-> query("SELECT `news_common_info`.`news_id`, `news_common_info`.`news_headline`, `news_common_info`.`news_status`, `category_info`.`cat_key_name`
+			$query=$this-> db-> query("SELECT `news_common_info`.`news_id`, `news_common_info`.`news_headline`, `news_common_info`.`news_status`, `category_info`.`cat_key_name`, `news_common_info`.`news_mod_date`, `news_common_info`.`news_mod_time`
 										FROM `news_common_info`, `category_info`
 										WHERE `news_common_info`.`news_status`=7 AND CONCAT(`news_pub_date`,' ',`news_pub_time`) > '".$last_hours."' AND `category_info`.`cat_id`=`news_common_info`.`cat_id`
 										ORDER BY `news_id` DESC LIMIT 3");
+// 			print_r($query-> result()); die();
 			
 			if($query->num_rows() > 0) return $query-> result();
 			else return false;	
@@ -2455,7 +2456,7 @@ class Query_model extends CI_Model{
 		
 		function top_news_info($limit)
 		{
-			$query=$this-> db-> query("SELECT `view_news_common_info`.`headline_tag`, `view_news_common_info`.`news_id`, `view_news_common_info`.`news_headline`, `view_news_common_info`.`img_ext`, `view_news_common_info`.`news_pub_date`,`view_news_common_info`.`news_pub_time`, `category_info`.`cat_name`,`category_info`.`cat_key_name`
+			$query=$this-> db-> query("SELECT `view_news_common_info`.`headline_tag`, `view_news_common_info`.`news_id`, `view_news_common_info`.`news_headline`, `view_news_common_info`.`img_ext`, `view_news_common_info`.`news_pub_date`,`view_news_common_info`.`news_pub_time`, `category_info`.`cat_name`,`category_info`.`cat_key_name`, `view_news_common_info`.`news_mod_date`,`view_news_common_info`.`news_mod_time`
 										FROM `view_news_common_info`,`category_info`
 										WHERE `view_news_common_info`.`cat_id` = `category_info`.`cat_id`
 										AND `view_news_common_info`.`news_status`=2 
@@ -2486,7 +2487,7 @@ class Query_model extends CI_Model{
 		
 		function selective_news_info($limit)
 		{
-			$query=$this-> db-> query("SELECT view_news_common_info.news_id, view_news_common_info.news_headline, view_news_common_info.news_reporter, view_news_common_info.img_ext,category_info.cat_key_name,view_news_common_info.news_status, view_news_common_info.cat_id, category_info.cat_name, view_news_common_info.news_pub_date,view_news_common_info.news_pub_time, view_news_common_info.news_mod_date
+			$query=$this-> db-> query("SELECT view_news_common_info.news_id, view_news_common_info.news_headline, view_news_common_info.news_reporter, view_news_common_info.img_ext,category_info.cat_key_name,view_news_common_info.news_status, view_news_common_info.cat_id, category_info.cat_name, view_news_common_info.news_pub_date,view_news_common_info.news_pub_time, view_news_common_info.news_mod_date, view_news_common_info.news_mod_time
 										FROM view_news_common_info,category_info
 										WHERE view_news_common_info.news_status=6 AND category_info.cat_id=view_news_common_info.cat_id
 										ORDER BY news_id DESC LIMIT ".$limit." ");
@@ -2503,7 +2504,7 @@ class Query_model extends CI_Model{
 		function latest_news_info($limit, $latestStatus='')
 		{
 			//$this->db->cache_off();
-			$this->db->select('view_news_common_info.news_id, view_news_common_info.news_headline,view_news_common_info.headline_tag, view_news_common_info.news_pub_date,view_news_common_info.news_pub_time , view_news_common_info.img_ext');
+			$this->db->select('view_news_common_info.news_id, view_news_common_info.news_headline,view_news_common_info.headline_tag, view_news_common_info.news_pub_date,view_news_common_info.news_pub_time , view_news_common_info.img_ext, view_news_common_info.news_mod_date,view_news_common_info.news_mod_time');
 			$this->db->from('view_news_common_info,category_info');
 			if($latestStatus) {$this->db->where('news_common_info.latestStatus !=', 1);}
 			
@@ -2528,7 +2529,7 @@ class Query_model extends CI_Model{
 		function newspaper_news($page_id, $date)
 		{
 			$this->db->cache_off(); 
-			$query=$this-> db-> query("SELECT `view_news_common_info`.`headline_tag`, `view_news_common_info`.`news_id`, `view_news_common_info`.`news_headline`, `view_news_common_info`.`img_ext`, `view_news_common_info`.`news_pub_date`,`view_news_common_info`.`news_pub_time`, `news_page_info`.`page_id`,`news_page_info`.`name_bn`
+			$query=$this-> db-> query("SELECT `view_news_common_info`.`headline_tag`, `view_news_common_info`.`news_id`, `view_news_common_info`.`news_headline`, `view_news_common_info`.`img_ext`, `view_news_common_info`.`news_pub_date`,`view_news_common_info`.`news_pub_time`, `news_page_info`.`page_id`,`news_page_info`.`name_bn`, `view_news_common_info`.`news_mod_date`,`view_news_common_info`.`news_mod_time`
 										FROM `view_news_common_info`, `news_page_info`
 										WHERE `view_news_common_info`.`news_status` != 0 
 										AND `view_news_common_info`.`page_id` = `news_page_info`.`page_id`
@@ -2621,6 +2622,7 @@ class Query_model extends CI_Model{
 
 		function daily_visitor_today()
 		{
+		    $this->db->cache_off(); 
 			$query=$this-> db-> query("SELECT * FROM daily_visitor_info ORDER BY day_id DESC LIMIT 1");
 			if($query->num_rows()>0)
 			{

@@ -135,7 +135,7 @@
                                                                 <strong>
                                                                     <p><a>নিউজ ডেস্ক</a></p>
                                                                 </strong>
-                                                                <p class="des">শ্যামল সিলেট</p>
+                                                                <p class="des">নিউজ ডেস্কট</p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -153,8 +153,8 @@
                                         </div>
                                     </div>
 
-                                    <a class="item" data-sub-html="<h4><?php echo stripcslashes($row->news_headline)?></h4>" data-pinterest-text="Pin it1" data-tweet-text="lightGallery slide  1" data-facebook-share-url="share/www.soumitra.com" data-twitter-share-url="share/twitter-share-url" href="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/' . $row->news_id . $row->img_ext) : $default_image ?>">
-                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/' . $row->news_id . $row->img_ext) : $default_image ?>" width="100%" >
+                                    <a class="item" data-sub-html="<h4><?php echo stripcslashes($row->news_headline)?></h4>" data-pinterest-text="Pin it1" data-tweet-text="lightGallery slide  1" data-facebook-share-url="share/www.soumitra.com" data-twitter-share-url="share/twitter-share-url" href="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/' . $row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image ?>">
+                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/' . $row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image ?>" width="100%" >
                                     </a>
                                     <div class="img-caption mt-1"> <?php echo stripslashes($row->img_caption) ?> </div>
 
@@ -445,7 +445,7 @@
                                 <div class="col-md-2">
                                     <div class="card text-center cat-writer">
                                         <div class="writer-img">
-                                            <img width="100" height="100" class="rounded-circle" src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/thumb' . '/' . $row->news_id . $row->img_ext) : $default_image ?>">
+                                            <img width="100" height="100" class="rounded-circle" src="<?php echo ($row->img_ext) ? base_url('images/news/' . $folder_name . '/thumb' . '/' . $row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image ?>">
                                         </div>
                                         <div class="card-body">
                                             <a href="<?php echo base_url('opinion/'.$row->news_id); ?>">

@@ -51,7 +51,7 @@
                                             <div class="col-xl-6 col-lg-6 col-md-6 col-6 col-12">
                                                 <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                                     <div class="">
-                                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                        <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                                     </div>
                                                 </a>
                                             </div>
@@ -78,7 +78,7 @@
                                      <div class="child-div-two">
                                         <a href="<?php echo base_url('details/'.$row->news_id.'/'.seoURL($row->news_headline)); ?>">
                                             <div class="">
-                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
+                                                <img class="lazy" data-src="<?php echo ($row->img_ext) ? base_url('images/news/'.$folder.'/'.$row->news_id.$row->img_ext.'?newst='.strtotime($row->news_mod_date.$row->news_mod_time)) : $default_image; ?>" alt="<?php echo $row->news_headline; ?>" width="100%">
                                             </div>
                                         </a>
                                         <div class="content-box">
@@ -127,7 +127,7 @@
                                     ?>
                                     <div class="list-box <?php if($key == 4) echo 'border-0'?>" >
                                         <div class="image-part">
-                                            <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
+                                            <img class="lazy" data-src="<?php echo ($item->img_ext) ? base_url('images/news/'.$folder.$small.$item->news_id.$item->img_ext.'?newst='.strtotime($item->news_mod_date.$item->news_mod_time)) : $default_image; ?>" alt="<?php echo $item->news_headline; ?>" width="100%">
                                         </div>
                                         <div class="content-list">
                                             <a href="<?php echo base_url('details/'.$item->news_id.'/'.seoURL($item->news_headline)); ?>">
