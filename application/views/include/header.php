@@ -60,18 +60,74 @@
 
 <body>
 
-
+    <style>
+        .sidebar-li{ list-style: none }
+        .inner-ul{padding-right: 25px;}
+        .inner-ul li{
+            text-align: right;
+        }
+        .inner-ul li a{
+            font-size: 13px;
+            color: #6d6d6d; 
+            transition: .1s ease all; 
+        }
+        .inner-ul li a:hover{
+            color: #fe0000; 
+        }
+        .sidenav {
+            padding-bottom: 15px;
+        }
+        .sidenav .sidebar-link {
+            padding: 8px 8px 3px 15px;
+        }
+    </style>
     <div id="mySidenav" class="sidenav">
         <a clas href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a class="sidebar-link" href="<?=  base_url()?>"> মূলপাতা</a>
-        <a class="mt-2 sidebar-link" href="<?=  base_url('sylhet')?>">সিলেটের কথা</a>
+        <?php if($newspaper){ ?>
+            <li class="nav-item sidebar-li">
+                <a class="mt-2 sidebar-link" href="#">আজকের পত্রিকা</a>
+                <ul class="inner-ul">
+                    <?php
+                        foreach($newspaper as $row){ ?>
+                            <li><a href="<?php echo base_url('news-paper/'.$row->page_id.'/'.date('Y-m-d').'/'.seoURL($row->name_bn)); ?>"><?= $row->name_bn ; ?> </a></li>
+                        <?php }
+                    ?>
+                </ul>
+            </li>
+        <?php } ?>
+        <li class="nav-item sidebar-li">
+            <a class="mt-2 sidebar-link " href="<?=  base_url('sylhet')?>">সিলেটের কথা</a>
+            <ul class="inner-ul">
+                <li><a href="<?php echo base_url('sylhet/sylhet-district')?>">সিলেট</a></li>
+                <li><a href="<?= base_url('sylhet/sunamganj')?>">সুনামগঞ্জ </a></li>
+                <li><a href="<?= base_url('sylhet/maulvibazar')?>">মৌলভীবাজার</a></li>
+                <li><a href="<?= base_url('sylhet/habiganj')?>">হবিগঞ্জ  </a></li>
+            </ul>
+        </li>
         <a class="mt-2 sidebar-link" href="<?=  base_url('national')?>">দেশের কথা</a>
-        <a class="mt-2 sidebar-link" href="<?=  base_url('aboard')?>">প্রবাসের কথা</a>
-        <a class="mt-2 sidebar-link" href="<?=  base_url('sports')?>">খেলা</a>
+        <a class="mt-2 sidebar-link" href="<?=  base_url('news-around')?>">দশদিক</a>
+        <a class="mt-2 sidebar-link" href="<?=  base_url('politics')?>">রাজনীতি</a>
+        <a class="mt-2 sidebar-link" href="<?=  base_url('economy')?>">অর্থনীতি</a>
+        <a class="mt-2 sidebar-link" href="<?=  base_url('economy')?>">তথ্যপ্রযুক্তি</a>
+        <li class="nav-item sidebar-li">
+            <a class="mt-2 sidebar-link " href="<?=  base_url('sports')?>">খেলা</a>
+            <ul class="inner-ul">
+                <li><a href="<?php echo base_url('sports/cricket')?>">ক্রিকেট</a></li>
+                <li><a href="<?= base_url('sports/football')?>">ফুটবল </a></li>
+                <li><a href="<?= base_url('sports/other-sports')?>">অন্যান্য</a></li>
+            </ul>
+        </li>
         <a class="mt-2 sidebar-link" href="<?=  base_url('rupali-kotha')?>">রূপালিকথা </a>
-        <a class="mt-2 sidebar-link" href="<?=  base_url('around-news')?>">চারদিক</a>
-        <a class="mt-2 sidebar-link" href="<?=  base_url('press-box')?>">প্রেসবক্স</a>
-        <a class="mt-2 sidebar-link" href="<?=  base_url('all-around-news')?>">দশদিক</a>
+        <li class="nav-item sidebar-li">
+            <a class="mt-2 sidebar-link " href="#">অন্যান্য</a>
+            <ul class="inner-ul">
+                <li><a href="<?php echo base_url('aboard')?>">প্রবাসের কথা</a></li>
+                <li><a href="<?= base_url('press-box')?>">প্রেসবক্স </a></li>
+                <li><a href="<?= base_url('opinion')?>">মুক্তমত</a></li>
+            </ul>
+        </li>
+        <a class="mt-2 sidebar-link" href="<?=  base_url('hridoye-ekattor')?>">হৃদয়ে একাত্তর</a>
     </div>
 
 

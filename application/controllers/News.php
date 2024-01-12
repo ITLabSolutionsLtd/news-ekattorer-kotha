@@ -674,11 +674,19 @@
         /********************************************************/
 
         public function contact(){
+            $data['newspaper']              = $this->query_model->page_info();
             $data['latest_ten_news']        = $this-> query_model-> latest_news_info(10);
             $data['main_content'] = 'contact/contact';
             $this->load->view('include/template', $data);
         }
 
+        public function privacy_policy(){
+            $data['isMobile']               = $this->isMobile();
+            $data['newspaper']              = $this->query_model->page_info();
+            $data['news_advertise']         = $this->query_model->news_advertise_info();
+            $data['main_content'] = 'privacy_policy';
+            $this->load->view('include/template', $data);
+        }
 
         
     }

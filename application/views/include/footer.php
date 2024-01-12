@@ -47,7 +47,8 @@
                         <div class="footer-box ">
                             <h3>আমাদের সম্পর্কে</h3>
                             <p class="detail-text mb-1"> মো. নজরুল ইসলাম কর্তৃক বিসমিল্লাহ অফসেট প্রিন্টিং প্রেস লালদীঘিরপার, সিলেট থেকে মুদ্রিত ও বিসিক শিল্পনগরী, গোটাটিকর, সিলেট থেকে প্রকাশিত। </p>
-                            <p class="text-muted mt-1" > <strong> &copy - একাত্তরের কথা <?php echo bn_convert(date('Y')); ?>  </strong> </p>
+                            <p class="text-muted mt-1 mb-0" ><strong> &copy - একাত্তরের কথা <?php echo bn_convert(date('Y')); ?>  </strong> </p>
+                            <p class="mt-1" ><span><a href="<?= base_url('privacy-policy'); ?>" class="btn btn-outline-danger btn-sm" style="font-size: 12px; padding: 1px 10px 1px;">Privacy Policy</a></span>  </p>
             
                         </div>
                     </div>

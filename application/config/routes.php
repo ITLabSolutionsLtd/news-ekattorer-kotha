@@ -61,7 +61,8 @@ $route['news-search'] = 'News/news_filter';
 $route['topic'] = 'News/topic';
 /*****News Tagwise ****/
 
-
+// Privacy Policy
+$route['privacy-policy']='News/privacy_policy';
 
 
 
